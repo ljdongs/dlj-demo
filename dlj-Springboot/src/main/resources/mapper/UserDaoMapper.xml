@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dljproject01.dao.UserDao">
+    <!--resultMap可以实现将查询结果映射为复杂类型的pojo,
+    type就是指定映射到哪一个pojo  pojo没有使用Entity Beans的普通java对象
+    id：设置resultMap的id-->
+    <resultMap id="UserResultMap" type="com.example.dljproject01.dto.User">
+       <!--定义主键，非常重要，如果是多个主键，则定义多个id-->
+        <!--property：主键在pojo中的属性名-->
+        <!--column：主键在数据库的列名-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+
+        <!--定义普通属性-->
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+    </resultMap>
+    <!--如此使用resultMap就可以实现该表和该类之间的映射了-->
+    <insert id="insert" parameterType="com.example.dljproject01.dto.User">
+        insert into tb_user(
+            id,
+            user_id,
+            user_name,
+            age,
+            address,
+            password
+        ) values
+        (
+            #{id},
+            #{userId},
+            #{userName},
+            #{age},
+            #{address},
+            #{password}
+        )
+    </insert>
+    <select id="queryAllUser" resultMap="UserResultMap">
+        select
+            id,
+            user_id,
+            user_name,
+            age,
+            address,
+            password
+        from tb_user
+    </select>
+    <select id="queryAllUserByQ"  resultMap="UserResultMap">
+        select
+            id,
+            user_id,
+            user_name,
+            age,
+            address,
+            password
+        from tb_user where user_name=#{q} or user_id =#{q}
+    </select>
+    <select id="queryUserByUserId" parameterType="com.example.dljproject01.dto.User" resultMap="UserResultMap">
+        select
+            id,
+            user_id,
+            user_name,
+            age,
+            address,
+            password
+        from tb_user
+        where user_id=#{userId}
+    </select>
+    <update id="updateUser" parameterType="com.example.dljproject01.dto.User">
+        update tb_user set
+            user_id = #{userId},
+            user_name = #{userName},
+            age = #{age},
+            address = #{address},
+            password = #{password}
+        where id = #{id}
+    </update>
+    <delete id="deleteUser" parameterType="com.example.dljproject01.dto.User">
+        delete from tb_user where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserById">
+        delete from tb_user where user_id = #{id}
+    </delete>
+</mapper>
