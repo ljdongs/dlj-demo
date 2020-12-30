@@ -1,4 +1,4 @@
-# ![1609038079075](C:\Users\ljdongs\AppData\Local\Temp\1609038079075.png)
+# ![1609038079075](https://github.com/ljdongs/dlj-demo/blob/master/1609038079075.png)
 
 ## 技术架构：
 
